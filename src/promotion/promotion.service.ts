@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateOrUpdatePromotionDto } from './promotion.dto';
-import { Promotion } from './promotion.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateOrUpdatePromotionDto } from "./promotion.dto";
+import { Promotion } from "./promotion.entity";
 
 @Injectable()
 export class PromotionService {
   constructor(
     @InjectRepository(Promotion)
-    private repository: Repository<Promotion>,
+    private repository: Repository<Promotion>
   ) {}
 
   findOne(id: number): Promise<Promotion | null> {

@@ -25,21 +25,38 @@ export interface BalancesServiceClient {
 
 export interface BalancesServiceController {
   send(
-    request: SendBalanceRequest,
-  ): Promise<SendBalanceResponse> | Observable<SendBalanceResponse> | SendBalanceResponse;
+    request: SendBalanceRequest
+  ):
+    | Promise<SendBalanceResponse>
+    | Observable<SendBalanceResponse>
+    | SendBalanceResponse;
 }
 
 export function BalancesServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["send"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("BalancesService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcMethod("BalancesService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("BalancesService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcStreamMethod("BalancesService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
   };
 }

@@ -1,8 +1,8 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { INestMicroservice } from '@nestjs/common';
-import { join } from 'path';
-import { Transport } from '@nestjs/microservices';
+import { NestFactory } from "@nestjs/core";
+import { AppModule } from "./app.module";
+import { INestMicroservice } from "@nestjs/common";
+import { join } from "path";
+import { Transport } from "@nestjs/microservices";
 
 async function bootstrap() {
   const app: INestMicroservice = await NestFactory.createMicroservice(
@@ -13,10 +13,10 @@ async function bootstrap() {
         url: `${process.env.URL}:${process.env.PORT}`,
         package: protobufPackage,
         protoPath: join(
-          'node_modules/@fidecly/grpc-proto/proto/campaign.proto',
+          "node_modules/@fidecly/grpc-proto/proto/campaign.proto"
         ),
       },
-    },
+    }
   );
   await app.listen();
 }

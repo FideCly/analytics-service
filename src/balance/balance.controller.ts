@@ -1,24 +1,24 @@
-import { Controller, Post } from '@nestjs/common';
-import { CreateOrUpdateBalanceDto } from './balance.dto';
-import { BalanceService } from './balance.service';
+import { Controller, Post } from "@nestjs/common";
+import { CreateOrUpdateBalanceDto } from "./balance.dto";
+import { BalanceService } from "./balance.service";
 
-@Controller('balance')
+@Controller("balance")
 export class BalanceController {
   constructor(private service: BalanceService) {}
 
   @Post()
-  async createOrUpdate(CreateOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
+  async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
     const balance = await this.service.findOne(
-      +CreateOrUpdateBalanceDto.promotionId,
+      +createOrUpdateBalanceDto.promotionId
     );
 
     if (balance) {
       return this.service.update(
-        +CreateOrUpdateBalanceDto.promotionId,
-        CreateOrUpdateBalanceDto,
+        +createOrUpdateBalanceDto.promotionId,
+        createOrUpdateBalanceDto
       );
     } else {
-      return this.service.create(CreateOrUpdateBalanceDto);
+      return this.service.create(createOrUpdateBalanceDto);
     }
   }
 }

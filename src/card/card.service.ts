@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateOrUpdateCardDto } from './card.dto';
-import { Card } from './card.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateOrUpdateCardDto } from "./card.dto";
+import { Card } from "./card.entity";
 
 @Injectable()
 export class CardService {
   constructor(
     @InjectRepository(Card)
-    private repository: Repository<Card>,
+    private repository: Repository<Card>
   ) {}
 
   async findOne(id: number): Promise<Card | null> {

@@ -7,9 +7,9 @@ import {
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { Card } from '../card/card.entity';
-import { Promotion } from '../promotion/promotion.entity';
+} from "typeorm";
+import { Card } from "../card/card.entity";
+import { Promotion } from "../promotion/promotion.entity";
 
 @Entity() // table name in database
 export class Shop {

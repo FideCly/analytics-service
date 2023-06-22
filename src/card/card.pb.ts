@@ -25,20 +25,39 @@ export interface CardServiceClient {
 }
 
 export interface CardServiceController {
-  send(request: SendCardRequest): Promise<SendCardResponse> | Observable<SendCardResponse> | SendCardResponse;
+  send(
+    request: SendCardRequest
+  ):
+    | Promise<SendCardResponse>
+    | Observable<SendCardResponse>
+    | SendCardResponse;
 }
 
 export function CardServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["send"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("CardService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcMethod("CardService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("CardService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcStreamMethod("CardService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
   };
 }

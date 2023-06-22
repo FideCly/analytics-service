@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateOrUpdateBalanceDto } from './balance.dto';
-import { Balance } from './balance.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { CreateOrUpdateBalanceDto } from "./balance.dto";
+import { Balance } from "./balance.entity";
 
 @Injectable()
 export class BalanceService {
   constructor(
     @InjectRepository(Balance)
-    private repository: Repository<Balance>,
+    private repository: Repository<Balance>
   ) {}
 
   findOne(id: number): Promise<Balance | null> {

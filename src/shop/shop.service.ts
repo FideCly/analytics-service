@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, UpdateResult } from 'typeorm';
-import { CreateOrUpdateShopDto } from './shop.dto';
-import { Shop } from './shop.entity';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository, UpdateResult } from "typeorm";
+import { CreateOrUpdateShopDto } from "./shop.dto";
+import { Shop } from "./shop.entity";
 
 @Injectable()
 export class ShopService {
   constructor(
     @InjectRepository(Shop)
-    private repository: Repository<Shop>,
+    private repository: Repository<Shop>
   ) {}
 
   /**
@@ -62,7 +62,7 @@ export class ShopService {
    */
   update(
     id: number,
-    updateShopDto: CreateOrUpdateShopDto,
+    updateShopDto: CreateOrUpdateShopDto
   ): Promise<UpdateResult> {
     return this.repository.update(id, updateShopDto);
   }

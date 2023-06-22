@@ -1,4 +1,4 @@
-import { Shop } from 'src/shop/shop.entity';
+import { Shop } from "src/shop/shop.entity";
 import {
   BaseEntity,
   Column,
@@ -10,8 +10,8 @@ import {
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { Balance } from '../balance/balance.entity';
+} from "typeorm";
+import { Balance } from "../balance/balance.entity";
 
 @Entity() // table name in database
 export class Card extends BaseEntity {
@@ -19,14 +19,14 @@ export class Card extends BaseEntity {
   id: number;
 
   @Column({
-    type: 'timestamp',
+    type: "timestamp",
     precision: 3,
     default: new Date(),
   })
   startAt: Date;
 
   @Column({
-    type: 'timestamp',
+    type: "timestamp",
     precision: 3,
   })
   endAt: Date;

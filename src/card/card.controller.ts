@@ -1,8 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CreateOrUpdateCardDto } from './card.dto';
-import { CardService } from './card.service';
+import { Body, Controller, Post } from "@nestjs/common";
+import { CreateOrUpdateCardDto } from "./card.dto";
+import { CardService } from "./card.service";
 
-@Controller('card')
+@Controller("card")
 export class CardController {
   constructor(private service: CardService) {}
 
@@ -12,7 +12,7 @@ export class CardController {
     if (card) {
       return this.service.update(
         +createOrUpdateCardDto.id,
-        createOrUpdateCardDto,
+        createOrUpdateCardDto
       );
     } else {
       return this.service.create(createOrUpdateCardDto);

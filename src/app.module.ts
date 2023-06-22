@@ -1,21 +1,21 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { CardModule } from './card/card.module';
-import { ShopModule } from './shop/shop.module';
-import { PromotionModule } from './promotion/promotion.module';
-import { BalanceModule } from './balance/balance.module';
+import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { AppController } from "./app.controller";
+import { CardModule } from "./card/card.module";
+import { ShopModule } from "./shop/shop.module";
+import { PromotionModule } from "./promotion/promotion.module";
+import { BalanceModule } from "./balance/balance.module";
 
 @Module({
   imports: [
     CardModule,
     ShopModule,
     ConfigModule.forRoot({
-      envFilePath: ['.env', '.env.dev'],
+      envFilePath: [".env", ".env.dev"],
     }),
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: "postgres",
       url: process.env.DATABASE_URL,
       host: process.env.DATABASE_HOST,
       port: +process.env.DATABASE_PORT,

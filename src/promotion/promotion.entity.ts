@@ -8,9 +8,9 @@ import {
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { Balance } from '../balance/balance.entity';
-import { Shop } from '../shop/shop.entity';
+} from "typeorm";
+import { Balance } from "../balance/balance.entity";
+import { Shop } from "../shop/shop.entity";
 
 @Entity()
 export class Promotion {
@@ -24,14 +24,14 @@ export class Promotion {
   checkoutLimit: number;
 
   @Column({
-    type: 'timestamp',
+    type: "timestamp",
     precision: 3,
     default: new Date(),
   })
   startAt: Date;
 
   @Column({
-    type: 'timestamp',
+    type: "timestamp",
     precision: 3,
   })
   endAt: Date;

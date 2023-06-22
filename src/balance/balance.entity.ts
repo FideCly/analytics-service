@@ -8,9 +8,9 @@ import {
   ManyToOne,
   PrimaryColumn,
   UpdateDateColumn,
-} from 'typeorm';
-import { Card } from '../card/card.entity';
-import { Promotion } from '../promotion/promotion.entity';
+} from "typeorm";
+import { Card } from "../card/card.entity";
+import { Promotion } from "../promotion/promotion.entity";
 
 @Entity()
 export class Balance {
