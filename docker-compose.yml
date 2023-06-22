@@ -3,7 +3,7 @@ services:
   db:
     image: postgres:12
     environment:
-      - .env
+      - POSTGRES_HOST_AUTH_METHOD=trust
     ports:
       - 5432:5432
     volumes:
@@ -14,9 +14,9 @@ services:
       - db
     build: ./
     ports:
-      - 3000:3000
+      - 5000:5000
     environment:
       - .env
 
-volumes: 
+volumes:
   db:
