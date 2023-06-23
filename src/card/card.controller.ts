@@ -1,21 +1,20 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller } from "@nestjs/common";
+import { GrpcMethod } from "@nestjs/microservices";
 import { CreateOrUpdateCardDto } from "./card.dto";
+import { ANALYTICS_PACKAGE_NAME } from "./card.pb";
 import { CardService } from "./card.service";
 
 @Controller("card")
 export class CardController {
-  constructor(private service: CardService) {}
+	constructor(private service: CardService) {}
 
-  @Post()
-  async createOrUpdate(@Body() createOrUpdateCardDto: CreateOrUpdateCardDto) {
-    const card = await this.service.findOne(+createOrUpdateCardDto.id);
-    if (card) {
-      return this.service.update(
-        +createOrUpdateCardDto.id,
-        createOrUpdateCardDto
-      );
-    } else {
-      return this.service.create(createOrUpdateCardDto);
-    }
-  }
+	@GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
+	async createOrUpdate(@Body() createOrUpdateCardDto: CreateOrUpdateCardDto) {
+		const card = await this.service.findOne(+createOrUpdateCardDto.id);
+		if (card) {
+			return this.service.update(+createOrUpdateCardDto.id, createOrUpdateCardDto);
+		} else {
+			return this.service.create(createOrUpdateCardDto);
+		}
+	}
 }

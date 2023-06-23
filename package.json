@@ -23,7 +23,8 @@
     "proto:card": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/card node_modules/@fidecly/grpc-proto/proto/analytics/card.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
     "proto:promotion": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/promotion node_modules/@fidecly/grpc-proto/proto/analytics/promotion.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
     "proto:shop": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/shop node_modules/@fidecly/grpc-proto/proto/analytics/shop.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:all": "npm run proto:balance && npm run proto:card && npm run proto:promotion && npm run proto:shop"
+    "proto:general": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src node_modules/@fidecly/grpc-proto/proto/analytics/general.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
+    "proto:all": "npm run proto:balance && npm run proto:card && npm run proto:promotion && npm run proto:shop && npm run proto:general"
   },
   "dependencies": {
     "@fidecly/grpc-proto": "github:FideCly/grpc-proto",
@@ -57,7 +58,7 @@
     "source-map-support": "^0.5.20",
     "supertest": "^6.1.3",
     "ts-jest": "29.0.5",
-    "ts-loader": "^9.2.3",
+    "ts-loader": "^9.4.3",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "4.2.0",
     "typescript": "^4.7.4"

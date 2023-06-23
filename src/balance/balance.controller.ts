@@ -1,24 +1,21 @@
-import { Controller, Post } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
+import { GrpcMethod } from "@nestjs/microservices";
 import { CreateOrUpdateBalanceDto } from "./balance.dto";
+import { ANALYTICS_PACKAGE_NAME } from "./balance.pb";
 import { BalanceService } from "./balance.service";
 
 @Controller("balance")
 export class BalanceController {
-  constructor(private service: BalanceService) {}
+	constructor(private service: BalanceService) {}
 
-  @Post()
-  async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
-    const balance = await this.service.findOne(
-      +createOrUpdateBalanceDto.promotionId
-    );
+	@GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
+	async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
+		const balance = await this.service.findOne(+createOrUpdateBalanceDto.promotionId);
 
-    if (balance) {
-      return this.service.update(
-        +createOrUpdateBalanceDto.promotionId,
-        createOrUpdateBalanceDto
-      );
-    } else {
-      return this.service.create(createOrUpdateBalanceDto);
-    }
-  }
+		if (balance) {
+			return this.service.update(+createOrUpdateBalanceDto.promotionId, createOrUpdateBalanceDto);
+		} else {
+			return this.service.create(createOrUpdateBalanceDto);
+		}
+	}
 }

@@ -21,39 +21,20 @@ export interface ShopServiceClient {
 }
 
 export interface ShopServiceController {
-  send(
-    request: SendShopRequest
-  ):
-    | Promise<SendShopResponse>
-    | Observable<SendShopResponse>
-    | SendShopResponse;
+  send(request: SendShopRequest): Promise<SendShopResponse> | Observable<SendShopResponse> | SendShopResponse;
 }
 
 export function ShopServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["send"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(
-        constructor.prototype,
-        method
-      );
-      GrpcMethod("ShopService", method)(
-        constructor.prototype[method],
-        method,
-        descriptor
-      );
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcMethod("ShopService", method)(constructor.prototype[method], method, descriptor);
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(
-        constructor.prototype,
-        method
-      );
-      GrpcStreamMethod("ShopService", method)(
-        constructor.prototype[method],
-        method,
-        descriptor
-      );
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
+      GrpcStreamMethod("ShopService", method)(constructor.prototype[method], method, descriptor);
     }
   };
 }
