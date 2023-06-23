@@ -6,16 +6,21 @@ import { BalanceService } from "./balance.service";
 
 @Controller("balance")
 export class BalanceController {
-	constructor(private service: BalanceService) {}
+  constructor(private service: BalanceService) {}
 
-	@GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
-	async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
-		const balance = await this.service.findOne(+createOrUpdateBalanceDto.promotionId);
+  @GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
+  async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
+    const balance = await this.service.findOne(
+      +createOrUpdateBalanceDto.promotionId
+    );
 
-		if (balance) {
-			return this.service.update(+createOrUpdateBalanceDto.promotionId, createOrUpdateBalanceDto);
-		} else {
-			return this.service.create(createOrUpdateBalanceDto);
-		}
-	}
+    if (balance) {
+      return this.service.update(
+        +createOrUpdateBalanceDto.promotionId,
+        createOrUpdateBalanceDto
+      );
+    } else {
+      return this.service.create(createOrUpdateBalanceDto);
+    }
+  }
 }

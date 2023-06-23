@@ -27,21 +27,38 @@ export interface PromotionServiceClient {
 
 export interface PromotionServiceController {
   send(
-    request: SendPromotionRequest,
-  ): Promise<SendPromotionResponse> | Observable<SendPromotionResponse> | SendPromotionResponse;
+    request: SendPromotionRequest
+  ):
+    | Promise<SendPromotionResponse>
+    | Observable<SendPromotionResponse>
+    | SendPromotionResponse;
 }
 
 export function PromotionServiceControllerMethods() {
   return function (constructor: Function) {
     const grpcMethods: string[] = ["send"];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("PromotionService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcMethod("PromotionService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("PromotionService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcStreamMethod("PromotionService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
   };
 }

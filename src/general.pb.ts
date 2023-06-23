@@ -60,33 +60,46 @@ export interface AnalyticsServiceClient {
   getAffluence(request: GetAffluenceRequest): Observable<GetAffluenceResponse>;
 
   getPromotionCheckoutsCount(
-    request: GetPromotionCheckoutsCountRequest,
+    request: GetPromotionCheckoutsCountRequest
   ): Observable<GetPromotionCheckoutsCountResponse>;
 
-  getClientsCount(request: GetClientsCountRequest): Observable<GetClientsCountResponse>;
+  getClientsCount(
+    request: GetClientsCountRequest
+  ): Observable<GetClientsCountResponse>;
 
-  getPromotionsRanking(request: GetPromotionsRankingRequest): Observable<GetPromotionsRankingResponse>;
+  getPromotionsRanking(
+    request: GetPromotionsRankingRequest
+  ): Observable<GetPromotionsRankingResponse>;
 }
 
 export interface AnalyticsServiceController {
   getAffluence(
-    request: GetAffluenceRequest,
-  ): Promise<GetAffluenceResponse> | Observable<GetAffluenceResponse> | GetAffluenceResponse;
+    request: GetAffluenceRequest
+  ):
+    | Promise<GetAffluenceResponse>
+    | Observable<GetAffluenceResponse>
+    | GetAffluenceResponse;
 
   getPromotionCheckoutsCount(
-    request: GetPromotionCheckoutsCountRequest,
+    request: GetPromotionCheckoutsCountRequest
   ):
     | Promise<GetPromotionCheckoutsCountResponse>
     | Observable<GetPromotionCheckoutsCountResponse>
     | GetPromotionCheckoutsCountResponse;
 
   getClientsCount(
-    request: GetClientsCountRequest,
-  ): Promise<GetClientsCountResponse> | Observable<GetClientsCountResponse> | GetClientsCountResponse;
+    request: GetClientsCountRequest
+  ):
+    | Promise<GetClientsCountResponse>
+    | Observable<GetClientsCountResponse>
+    | GetClientsCountResponse;
 
   getPromotionsRanking(
-    request: GetPromotionsRankingRequest,
-  ): Promise<GetPromotionsRankingResponse> | Observable<GetPromotionsRankingResponse> | GetPromotionsRankingResponse;
+    request: GetPromotionsRankingRequest
+  ):
+    | Promise<GetPromotionsRankingResponse>
+    | Observable<GetPromotionsRankingResponse>
+    | GetPromotionsRankingResponse;
 }
 
 export function AnalyticsServiceControllerMethods() {
@@ -98,13 +111,27 @@ export function AnalyticsServiceControllerMethods() {
       "getPromotionsRanking",
     ];
     for (const method of grpcMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcMethod("AnalyticsService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcMethod("AnalyticsService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
     const grpcStreamMethods: string[] = [];
     for (const method of grpcStreamMethods) {
-      const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
-      GrpcStreamMethod("AnalyticsService", method)(constructor.prototype[method], method, descriptor);
+      const descriptor: any = Reflect.getOwnPropertyDescriptor(
+        constructor.prototype,
+        method
+      );
+      GrpcStreamMethod("AnalyticsService", method)(
+        constructor.prototype[method],
+        method,
+        descriptor
+      );
     }
   };
 }
