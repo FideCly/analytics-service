@@ -5,8 +5,8 @@ import { Promotion } from "./promotion.entity";
 import { PromotionService } from "./promotion.service";
 
 @Module({
-	controllers: [PromotionController],
-	imports: [TypeOrmModule.forFeature([Promotion])],
-	providers: [PromotionService]
+  controllers: [PromotionController],
+  imports: [TypeOrmModule.forFeature([Promotion])],
+  providers: [PromotionService],
 })
 export class PromotionModule {}

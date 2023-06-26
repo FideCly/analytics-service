@@ -6,8 +6,8 @@ import { Card } from "./card.entity";
 import { CardService } from "./card.service";
 
 @Module({
-	controllers: [CardController],
-	providers: [CardService],
-	imports: [forwardRef(() => ShopModule), TypeOrmModule.forFeature([Card])]
+  controllers: [CardController],
+  providers: [CardService],
+  imports: [forwardRef(() => ShopModule), TypeOrmModule.forFeature([Card])],
 })
 export class CardModule {}

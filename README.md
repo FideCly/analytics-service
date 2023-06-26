@@ -32,6 +32,14 @@
 $ npm install
 ```
 
+### Available commands
+
+-   `npm start`
+-   `npm run build`
+-   `npm run test`
+-   `npm run lint` (`npm run lint -- --fix` to lint automatically)
+-   `npm run format`
+
 ## Running the app
 
 ```bash
@@ -64,9 +72,9 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+-   Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
+-   Website - [https://nestjs.com](https://nestjs.com/)
+-   Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
