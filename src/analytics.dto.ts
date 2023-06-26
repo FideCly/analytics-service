@@ -1,58 +1,67 @@
-import { IsNotEmpty } from "class-validator";
+import { IsDateString, IsNotEmpty, IsNumber } from "class-validator";
 import {
-  GetAffluenceRequest,
-  GetClientsCountRequest,
-  GetPromotionCheckoutsCountRequest,
-  GetPromotionsRankingRequest,
+	GetAffluenceRequest,
+	GetClientsCountRequest,
+	GetPromotionCheckoutsCountRequest,
+	GetPromotionsRankingRequest
 } from "./general.pb";
 
 export class GetAffluenceRequestDto implements GetAffluenceRequest {
-  @IsNotEmpty()
-  shopId: number;
+	@IsNotEmpty()
+	@IsNumber()
+	shopId: number;
 
-  @IsNotEmpty()
-  startDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	startDate: string;
 
-  @IsNotEmpty()
-  endDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	endDate: string;
 }
 
-export class GetPromotionCheckoutsCountRequestDto
-  implements GetPromotionCheckoutsCountRequest
-{
-  @IsNotEmpty()
-  shopId: number;
+export class GetPromotionCheckoutsCountRequestDto implements GetPromotionCheckoutsCountRequest {
+	@IsNotEmpty()
+	@IsNumber()
+	shopId: number;
 
-  @IsNotEmpty()
-  promotionId: number;
+	@IsNotEmpty()
+	@IsNumber()
+	promotionId: number;
 
-  @IsNotEmpty()
-  startDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	startDate: string;
 
-  @IsNotEmpty()
-  endDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	endDate: string;
 }
 
 export class GetClientsCountRequestDto implements GetClientsCountRequest {
-  @IsNotEmpty()
-  shopId: number;
+	@IsNotEmpty()
+	@IsNumber()
+	shopId: number;
 
-  @IsNotEmpty()
-  startDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	startDate: string;
 
-  @IsNotEmpty()
-  endDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	endDate: string;
 }
 
-export class GetPromotionsRankingRequestDto
-  implements GetPromotionsRankingRequest
-{
-  @IsNotEmpty()
-  shopId: number;
+export class GetPromotionsRankingRequestDto implements GetPromotionsRankingRequest {
+	@IsNotEmpty()
+	@IsNumber()
+	shopId: number;
 
-  @IsNotEmpty()
-  startDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	startDate: string;
 
-  @IsNotEmpty()
-  endDate: string;
+	@IsNotEmpty()
+	@IsDateString()
+	endDate: string;
 }
