@@ -5,3 +5,5 @@ dist/
 tmp/
 temp/
 .env.development.local
+src/.DS_Store
+.DS_Store
