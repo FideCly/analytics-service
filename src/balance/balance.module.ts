@@ -8,5 +8,6 @@ import { BalanceService } from "./balance.service";
   controllers: [BalanceController],
   providers: [BalanceService],
   imports: [TypeOrmModule.forFeature([Balance])],
+  exports: [BalanceService, TypeOrmModule],
 })
 export class BalanceModule {}

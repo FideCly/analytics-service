@@ -1,31 +1,30 @@
 import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
 import {
   GetClientsCountRequestDto,
   GetPromotionsRankingRequestDto,
 } from "./analytics.dto";
-import { Balance } from "./balance/balance.entity";
 import {
+  GetAffluenceRequest,
   GetAffluenceResponse,
   GetClientsCountResponse,
   GetPromotionCheckoutsCountRequest,
   GetPromotionCheckoutsCountResponse,
   GetPromotionsRankingResponse,
-} from "./general.pb";
-import { Promotion } from "./promotion/promotion.entity";
-import { Shop } from "./shop/shop.entity";
+} from "./analytics.pb";
+import { Balance } from "./balance/balance.entity";
+import { PromotionService } from "./promotion/promotion.service";
+import { ShopService } from "./shop/shop.service";
 
 @Injectable()
 export class AppService {
   constructor(
-    @InjectRepository(Shop)
-    private shopRepository: Repository<Shop>,
-    @InjectRepository(Promotion)
-    private promotiondRepository: Repository<Promotion>
+    private readonly shopService: ShopService,
+    private readonly promotionService: PromotionService
   ) {}
 
-  async getAffluence(payload): Promise<GetAffluenceResponse> {
+  async getAffluence(
+    payload: GetAffluenceRequest
+  ): Promise<GetAffluenceResponse> {
     try {
       const { shopId, startDate, endDate } = payload;
 
@@ -45,9 +44,7 @@ export class AppService {
         } as GetAffluenceResponse;
       }
 
-      const shop = await this.shopRepository.findOne({
-        where: { id: shopId },
-      });
+      const shop = await this.shopService.findOne(shopId);
 
       if (!shop) {
         return {
@@ -125,10 +122,10 @@ export class AppService {
         } as GetPromotionCheckoutsCountResponse;
       }
 
-      const promotion = await this.promotiondRepository.findOne({
-        where: { id: promotionId, shopId: shopId },
-        relations: { balances: true },
-      });
+      const promotion = await this.promotionService.findOneFromShop(
+        promotionId,
+        shopId
+      );
 
       if (!promotion) {
         return {
@@ -188,9 +185,7 @@ export class AppService {
         } as GetPromotionsRankingResponse;
       }
 
-      const shop = await this.shopRepository.findOne({
-        where: { id: shopId },
-      });
+      const shop = await this.shopService.findOne(shopId);
 
       if (!shop) {
         return {
@@ -276,10 +271,7 @@ export class AppService {
           errors: ["Missing parameters"],
         } as GetAffluenceResponse;
       }
-
-      const shop = await this.shopRepository.findOne({
-        where: { id: shopId },
-      });
+      const shop = await this.shopService.findOne(shopId);
 
       if (!shop) {
         return {

@@ -6,10 +6,8 @@ import { Card } from "./card.entity";
 
 @Injectable()
 export class CardService {
-  constructor(
-    @InjectRepository(Card)
-    private repository: Repository<Card>
-  ) {}
+  @InjectRepository(Card)
+  private readonly repository: Repository<Card>;
 
   async findOne(id: number): Promise<Card | null> {
     return this.repository.findOneBy({ id });

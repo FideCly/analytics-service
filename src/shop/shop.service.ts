@@ -6,10 +6,8 @@ import { Shop } from "./shop.entity";
 
 @Injectable()
 export class ShopService {
-  constructor(
-    @InjectRepository(Shop)
-    private repository: Repository<Shop>
-  ) {}
+  @InjectRepository(Shop)
+  private readonly repository: Repository<Shop>;
 
   /**
    * Find shop by id

@@ -6,8 +6,8 @@ import {
   GetPromotionCheckoutsCountRequestDto,
   GetPromotionsRankingRequestDto,
 } from "./analytics.dto";
+import { ANALYTICS_SERVICE_NAME, GetAffluenceResponse } from "./analytics.pb";
 import { AppService } from "./app.service";
-import { ANALYTICS_SERVICE_NAME, GetAffluenceResponse } from "./general.pb";
 
 @Controller("analytics")
 export class AppController {

@@ -2,18 +2,10 @@ import { INestMicroservice } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { Transport } from "@nestjs/microservices";
 import { join } from "path";
+import { protobufPackage } from "./analytics.pb";
 import { AppModule } from "./app.module";
-import { protobufPackage } from "./general.pb";
 
 async function bootstrap() {
-  const paths: string[] = [
-    "node_modules/@fidecly/grpc-proto/proto/analytics/balance.proto.proto",
-    "node_modules/@fidecly/grpc-proto/proto/analytics/promotion.proto",
-    "node_modules/@fidecly/grpc-proto/proto/analytics/shop.proto",
-    "node_modules/@fidecly/grpc-proto/proto/analytics/card.proto",
-    "node_modules/@fidecly/grpc-proto/proto/analytics/general.proto",
-  ];
-
   const app: INestMicroservice = await NestFactory.createMicroservice(
     AppModule,
     {
@@ -21,7 +13,9 @@ async function bootstrap() {
       options: {
         url: `${process.env.URL}:${process.env.PORT}`,
         package: protobufPackage,
-        protoPath: join(...paths),
+        protoPath: join(
+          "node_modules/@fidecly/grpc-proto/proto/analytics/analytics.proto"
+        ),
       },
     }
   );

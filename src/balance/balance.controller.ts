@@ -1,7 +1,7 @@
 import { Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
+import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
 import { CreateOrUpdateBalanceDto } from "./balance.dto";
-import { ANALYTICS_PACKAGE_NAME } from "./balance.pb";
 import { BalanceService } from "./balance.service";
 
 @Controller("balance")

@@ -22,11 +22,11 @@ export const shopFixture = {
           },
         },
         {
-          id: 1,
+          id: 2,
           counter: 2,
           createdAt: new Date("2023-03-23"),
           promotion: {
-            id: 2,
+            id: 1,
             name: "Mock Promotion 1",
             startDate: new Date("2023-03-22"),
             endDate: new Date("2023-03-25"),
@@ -34,11 +34,11 @@ export const shopFixture = {
           },
         },
         {
-          id: 1,
+          id: 3,
           counter: 3,
           createdAt: new Date("2023-03-24"),
           promotion: {
-            id: 3,
+            id: 1,
             name: "Mock Promotion 1",
             startDate: new Date("2023-03-22"),
             endDate: new Date("2023-03-25"),
@@ -46,11 +46,11 @@ export const shopFixture = {
           },
         },
         {
-          id: 1,
+          id: 4,
           counter: 4,
           createdAt: new Date("2023-04-21"),
           promotion: {
-            id: 4,
+            id: 1,
             name: "Mock Promotion 1",
             startDate: new Date("2023-04-25"),
             endDate: new Date("2023-05-27"),
@@ -71,7 +71,7 @@ export const shopFixture = {
           counter: 1,
           createdAt: new Date("2023-03-22"),
           promotion: {
-            id: 1,
+            id: 2,
             name: "Mock Promotion 2",
             startDate: new Date("2023-03-22"),
             endDate: new Date(new Date("2023-03-25")),
@@ -95,7 +95,7 @@ export const shopFixture = {
           counter: 6,
           createdAt: new Date("2023-03-24"),
           promotion: {
-            id: 3,
+            id: 2,
             name: "Mock Promotion 2",
             startDate: new Date("2023-03-22"),
             endDate: new Date("2023-03-25"),
@@ -107,7 +107,7 @@ export const shopFixture = {
           counter: 4,
           createdAt: new Date("2023-04-21"),
           promotion: {
-            id: 4,
+            id: 2,
             name: "Mock Promotion 2",
             startDate: new Date("2023-04-25"),
             endDate: new Date("2023-05-27"),
@@ -245,4 +245,10 @@ export const promotionFixture = {
       },
     },
   ],
+};
+
+export const shopWithEmptyPromotionFixture = {
+  id: 9,
+  name: "Mock Shop with Empty Promotions",
+  promotions: [],
 };

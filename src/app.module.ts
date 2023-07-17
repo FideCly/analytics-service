@@ -10,10 +10,8 @@ import { ShopModule } from "./shop/shop.module";
 
 @Module({
   imports: [
-    CardModule,
-    ShopModule,
     ConfigModule.forRoot({
-      envFilePath: [".env", ".env.dev"],
+      envFilePath: [".env", ".env.development", "env.test"],
     }),
     TypeOrmModule.forRoot({
       type: "postgres",
@@ -28,11 +26,15 @@ import { ShopModule } from "./shop/shop.module";
       logging: false,
       autoLoadEntities: true,
     }),
+
+    CardModule,
+    ShopModule,
     PromotionModule,
     BalanceModule,
   ],
 
   controllers: [AppController],
   providers: [AppService],
+  exports: [AppService],
 })
 export class AppModule {}

@@ -24,7 +24,8 @@
     "proto:promotion": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/promotion node_modules/@fidecly/grpc-proto/proto/analytics/promotion.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
     "proto:shop": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/shop node_modules/@fidecly/grpc-proto/proto/analytics/shop.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
     "proto:general": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src node_modules/@fidecly/grpc-proto/proto/analytics/general.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:all": "npm run proto:balance && npm run proto:card && npm run proto:promotion && npm run proto:shop && npm run proto:general"
+    "proto:analytics": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src node_modules/@fidecly/grpc-proto/proto/analytics/analytics.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
+    "proto:all": "npm run proto:balance && npm run proto:card && npm run proto:promotion && npm run proto:shop && npm run proto:general && npm run proto:analytics"
   },
   "dependencies": {
     "@fidecly/grpc-proto": "github:FideCly/grpc-proto",
@@ -33,9 +34,11 @@
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^3.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/microservices": "^9.4.0",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^10.0.0",
     "class-validator": "^0.14.0",
+    "pg": "^8.9.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "ts-proto": "^1.150.0"

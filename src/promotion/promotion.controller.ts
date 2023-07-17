@@ -1,7 +1,7 @@
 import { Body, Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
+import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
 import { CreateOrUpdatePromotionDto } from "./promotion.dto";
-import { ANALYTICS_PACKAGE_NAME } from "./promotion.pb";
 import { PromotionService } from "./promotion.service";
 
 @Controller("promotion")

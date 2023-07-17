@@ -4,7 +4,7 @@ import {
   GetClientsCountRequest,
   GetPromotionCheckoutsCountRequest,
   GetPromotionsRankingRequest,
-} from "./general.pb";
+} from "./analytics.pb";
 
 export class GetAffluenceRequestDto implements GetAffluenceRequest {
   @IsNotEmpty()

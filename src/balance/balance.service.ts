@@ -6,10 +6,8 @@ import { Balance } from "./balance.entity";
 
 @Injectable()
 export class BalanceService {
-  constructor(
-    @InjectRepository(Balance)
-    private repository: Repository<Balance>
-  ) {}
+  @InjectRepository(Balance)
+  private readonly repository: Repository<Balance>;
 
   findOne(id: number): Promise<Balance | null> {
     return this.repository.findOne({

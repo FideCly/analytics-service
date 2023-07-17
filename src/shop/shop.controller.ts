@@ -1,7 +1,7 @@
 import { Body, Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
+import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
 import { CreateOrUpdateShopDto } from "./shop.dto";
-import { ANALYTICS_PACKAGE_NAME } from "./shop.pb";
 import { ShopService } from "./shop.service";
 
 @Controller("shop")

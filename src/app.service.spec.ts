@@ -1,55 +1,49 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
-import { promotionFixture, shopFixture } from "./analytics.fixtures";
+import { Repository } from "typeorm";
+import {
+  shopFixture,
+  shopWithEmptyPromotionFixture,
+} from "./analytics.fixtures";
 import { AppService } from "./app.service";
-import { Balance } from "./balance/balance.entity";
-import { Card } from "./card/card.entity";
 import { Promotion } from "./promotion/promotion.entity";
+import { PromotionService } from "./promotion/promotion.service";
 import { Shop } from "./shop/shop.entity";
+import { ShopService } from "./shop/shop.service";
 
 describe("AppService", () => {
   let appService: AppService;
-
-  const mockShopRepository = {
-    findOne: jest.fn(),
-  };
-
-  const mockPromotionRepository = {
-    findOne: jest.fn(),
-  };
-
-  const mockCardRepository = {
-    find: jest.fn(),
-  };
-
-  const mockBalanceRepository = {
-    find: jest.fn(),
-  };
+  let mockShopRepository: Repository<Shop>;
+  let mockPromotionRepository: Repository<Promotion>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AppService,
+        ShopService,
+        PromotionService,
         {
           provide: getRepositoryToken(Shop),
-          useValue: mockShopRepository,
+          useValue: {
+            findOneBy: jest.fn(),
+          },
         },
         {
           provide: getRepositoryToken(Promotion),
-          useValue: mockPromotionRepository,
-        },
-        {
-          provide: getRepositoryToken(Card),
-          useValue: mockCardRepository,
-        },
-        {
-          provide: getRepositoryToken(Balance),
-          useValue: mockBalanceRepository,
+          useValue: {
+            findOneBy: jest.fn(),
+          },
         },
       ],
     }).compile();
 
     appService = module.get<AppService>(AppService);
+    // shopService = module.get<ShopService>(ShopService);
+    // promotionService = module.get<PromotionService>(PromotionService);
+    mockShopRepository = module.get<Repository<Shop>>(getRepositoryToken(Shop));
+    mockPromotionRepository = module.get<Repository<Promotion>>(
+      getRepositoryToken(Promotion)
+    );
   });
 
   afterEach(() => {
@@ -58,7 +52,9 @@ describe("AppService", () => {
 
   describe("getAffluence", () => {
     it("should return an sum of counter in balances", async () => {
-      jest.spyOn(mockShopRepository, "findOne").mockResolvedValue(shopFixture);
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getAffluence({
         shopId: 1,
@@ -88,7 +84,9 @@ describe("AppService", () => {
     });
 
     it("should return an error response if dates are not valid", async () => {
-      mockShopRepository.findOne.mockRejectedValueOnce(new Error("test"));
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getAffluence({
         shopId: 1,
@@ -104,7 +102,9 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there is an error", async () => {
-      mockShopRepository.findOne.mockRejectedValueOnce(new Error("test"));
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getAffluence({
         shopId: 1,
@@ -122,7 +122,10 @@ describe("AppService", () => {
 
   describe("getPromotionCheckoutsCount", () => {
     it("should return the sum of counters in balances for a promotion", async () => {
-      mockPromotionRepository.findOne.mockResolvedValueOnce(promotionFixture);
+      jest.spyOn(mockPromotionRepository, "findOneBy").mockResolvedValue({
+        ...(new Promotion() as any),
+        ...shopFixture.promotions[0],
+      });
 
       const result = await appService.getPromotionCheckoutsCount({
         shopId: 1,
@@ -139,19 +142,17 @@ describe("AppService", () => {
     });
 
     it("should return an error response if the promotion is not found", async () => {
-      mockPromotionRepository.findOne.mockResolvedValueOnce(undefined);
+      jest
+        .spyOn(mockPromotionRepository, "findOneBy")
+        .mockResolvedValue(undefined);
 
       const result = await appService.getPromotionCheckoutsCount({
         shopId: 1,
-        promotionId: 2,
+        promotionId: 5,
         startDate: "2023-01-01",
         endDate: "2023-01-31",
       });
 
-      expect(mockPromotionRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 2, shopId: 1 },
-        relations: { balances: true },
-      });
       expect(result).toEqual({
         status: 404,
         value: null,
@@ -160,7 +161,9 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there is an error", async () => {
-      mockPromotionRepository.findOne.mockRejectedValueOnce(new Error("test"));
+      jest
+        .spyOn(mockPromotionRepository, "findOneBy")
+        .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getPromotionCheckoutsCount({
         shopId: 1,
@@ -169,10 +172,6 @@ describe("AppService", () => {
         endDate: "2023-01-31",
       });
 
-      expect(mockPromotionRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 2, shopId: 1 },
-        relations: { balances: true },
-      });
       expect(result).toEqual({
         status: 500,
         value: null,
@@ -183,7 +182,9 @@ describe("AppService", () => {
 
   describe("getPromotionsRanking", () => {
     it("should return a ranking of promotions based on the sum of counters in balances", async () => {
-      mockShopRepository.findOne.mockResolvedValueOnce(shopFixture);
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getPromotionsRanking({
         shopId: 1,
@@ -200,17 +201,14 @@ describe("AppService", () => {
     });
 
     it("should return an error response if the shop is not found", async () => {
-      mockShopRepository.findOne.mockResolvedValueOnce(undefined);
+      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue(undefined);
 
       const result = await appService.getPromotionsRanking({
-        shopId: 1,
+        shopId: 5,
         startDate: "2023-01-01",
         endDate: "2023-01-31",
       });
 
-      expect(mockShopRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 1 },
-      });
       expect(result).toEqual({
         status: 404,
         errors: ["Shop not found"],
@@ -220,17 +218,17 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there are no promotions", async () => {
-      mockShopRepository.findOne.mockResolvedValueOnce({ promotions: [] });
+      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue({
+        ...(new Shop() as any),
+        ...shopWithEmptyPromotionFixture,
+      });
 
       const result = await appService.getPromotionsRanking({
-        shopId: 1,
+        shopId: 9,
         startDate: "2023-01-01",
         endDate: "2023-01-31",
       });
 
-      expect(mockShopRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 1 },
-      });
       expect(result).toEqual({
         status: 404,
         errors: ["Promotions not found"],
@@ -240,7 +238,9 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there is an error", async () => {
-      mockShopRepository.findOne.mockRejectedValueOnce(new Error("test"));
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getPromotionsRanking({
         shopId: 1,
@@ -248,9 +248,6 @@ describe("AppService", () => {
         endDate: "2023-01-31",
       });
 
-      expect(mockShopRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 1 },
-      });
       expect(result).toEqual({
         status: 500,
         errors: [new Error("test")],
@@ -262,7 +259,9 @@ describe("AppService", () => {
 
   describe("getClientsCount", () => {
     it("should return the number of users (cards in a shop)", async () => {
-      mockShopRepository.findOne.mockResolvedValueOnce(shopFixture);
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getClientsCount({
         shopId: 1,
@@ -278,10 +277,10 @@ describe("AppService", () => {
     });
 
     it("should return an error response if the shop is not found", async () => {
-      mockShopRepository.findOne.mockResolvedValueOnce(undefined);
+      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue(undefined);
 
       const result = await appService.getClientsCount({
-        shopId: 1,
+        shopId: 8,
         startDate: "2023-01-01",
         endDate: "2023-01-31",
       });
@@ -294,7 +293,9 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there is an error", async () => {
-      mockShopRepository.findOne.mockRejectedValueOnce(new Error("test"));
+      jest
+        .spyOn(mockShopRepository, "findOneBy")
+        .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getClientsCount({
         shopId: 1,
@@ -302,9 +303,6 @@ describe("AppService", () => {
         endDate: "2023-01-31",
       });
 
-      expect(mockShopRepository.findOne).toHaveBeenCalledWith({
-        where: { id: 1 },
-      });
       expect(result).toEqual({
         status: 500,
         value: null,

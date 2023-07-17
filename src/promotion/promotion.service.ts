@@ -6,13 +6,15 @@ import { Promotion } from "./promotion.entity";
 
 @Injectable()
 export class PromotionService {
-  constructor(
-    @InjectRepository(Promotion)
-    private repository: Repository<Promotion>
-  ) {}
+  @InjectRepository(Promotion)
+  private readonly repository: Repository<Promotion>;
 
   findOne(id: number): Promise<Promotion | null> {
     return this.repository.findOneBy({ id });
+  }
+
+  findOneFromShop(id: number, shopId: number): Promise<Promotion | null> {
+    return this.repository.findOneBy({ id, shopId });
   }
 
   async create(createPromotionDto: CreateOrUpdatePromotionDto, shopId: number) {

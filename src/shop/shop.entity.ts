@@ -11,7 +11,7 @@ import {
 import { Card } from "../card/card.entity";
 import { Promotion } from "../promotion/promotion.entity";
 
-@Entity() // table name in database
+@Entity()
 export class Shop {
   @PrimaryColumn()
   id: number;
