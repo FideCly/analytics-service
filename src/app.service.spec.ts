@@ -25,21 +25,19 @@ describe("AppService", () => {
         {
           provide: getRepositoryToken(Shop),
           useValue: {
-            findOneBy: jest.fn(),
+            findOne: jest.fn(),
           },
         },
         {
           provide: getRepositoryToken(Promotion),
           useValue: {
-            findOneBy: jest.fn(),
+            findOne: jest.fn(),
           },
         },
       ],
     }).compile();
 
     appService = module.get<AppService>(AppService);
-    // shopService = module.get<ShopService>(ShopService);
-    // promotionService = module.get<PromotionService>(PromotionService);
     mockShopRepository = module.get<Repository<Shop>>(getRepositoryToken(Shop));
     mockPromotionRepository = module.get<Repository<Promotion>>(
       getRepositoryToken(Promotion)
@@ -53,7 +51,7 @@ describe("AppService", () => {
   describe("getAffluence", () => {
     it("should return an sum of counter in balances", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getAffluence({
@@ -85,7 +83,7 @@ describe("AppService", () => {
 
     it("should return an error response if dates are not valid", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getAffluence({
@@ -103,7 +101,7 @@ describe("AppService", () => {
 
     it("should return an error response if there is an error", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getAffluence({
@@ -122,7 +120,7 @@ describe("AppService", () => {
 
   describe("getPromotionCheckoutsCount", () => {
     it("should return the sum of counters in balances for a promotion", async () => {
-      jest.spyOn(mockPromotionRepository, "findOneBy").mockResolvedValue({
+      jest.spyOn(mockPromotionRepository, "findOne").mockResolvedValue({
         ...(new Promotion() as any),
         ...shopFixture.promotions[0],
       });
@@ -143,7 +141,7 @@ describe("AppService", () => {
 
     it("should return an error response if the promotion is not found", async () => {
       jest
-        .spyOn(mockPromotionRepository, "findOneBy")
+        .spyOn(mockPromotionRepository, "findOne")
         .mockResolvedValue(undefined);
 
       const result = await appService.getPromotionCheckoutsCount({
@@ -154,15 +152,15 @@ describe("AppService", () => {
       });
 
       expect(result).toEqual({
-        status: 404,
-        value: null,
-        errors: ["Promotion not found"],
+        status: 200,
+        value: 0,
+        errors: [],
       });
     });
 
     it("should return an error response if there is an error", async () => {
       jest
-        .spyOn(mockPromotionRepository, "findOneBy")
+        .spyOn(mockPromotionRepository, "findOne")
         .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getPromotionCheckoutsCount({
@@ -183,7 +181,7 @@ describe("AppService", () => {
   describe("getPromotionsRanking", () => {
     it("should return a ranking of promotions based on the sum of counters in balances", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getPromotionsRanking({
@@ -201,7 +199,7 @@ describe("AppService", () => {
     });
 
     it("should return an error response if the shop is not found", async () => {
-      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue(undefined);
+      jest.spyOn(mockShopRepository, "findOne").mockResolvedValue(undefined);
 
       const result = await appService.getPromotionsRanking({
         shopId: 5,
@@ -218,7 +216,7 @@ describe("AppService", () => {
     });
 
     it("should return an error response if there are no promotions", async () => {
-      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue({
+      jest.spyOn(mockShopRepository, "findOne").mockResolvedValue({
         ...(new Shop() as any),
         ...shopWithEmptyPromotionFixture,
       });
@@ -239,7 +237,7 @@ describe("AppService", () => {
 
     it("should return an error response if there is an error", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getPromotionsRanking({
@@ -260,7 +258,7 @@ describe("AppService", () => {
   describe("getClientsCount", () => {
     it("should return the number of users (cards in a shop)", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockResolvedValue({ ...(new Shop() as any), ...shopFixture });
 
       const result = await appService.getClientsCount({
@@ -277,7 +275,7 @@ describe("AppService", () => {
     });
 
     it("should return an error response if the shop is not found", async () => {
-      jest.spyOn(mockShopRepository, "findOneBy").mockResolvedValue(undefined);
+      jest.spyOn(mockShopRepository, "findOne").mockResolvedValue(undefined);
 
       const result = await appService.getClientsCount({
         shopId: 8,
@@ -294,7 +292,7 @@ describe("AppService", () => {
 
     it("should return an error response if there is an error", async () => {
       jest
-        .spyOn(mockShopRepository, "findOneBy")
+        .spyOn(mockShopRepository, "findOne")
         .mockRejectedValueOnce(new Error("test"));
 
       const result = await appService.getClientsCount({

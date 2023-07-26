@@ -19,13 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "proto:install": "npm i git+https://github.com/FideCly/grpc-proto.git",
-    "proto:balance": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/balance node_modules/@fidecly/grpc-proto/proto/analytics/balance.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:card": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/card node_modules/@fidecly/grpc-proto/proto/analytics/card.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:promotion": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/promotion node_modules/@fidecly/grpc-proto/proto/analytics/promotion.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:shop": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src/shop node_modules/@fidecly/grpc-proto/proto/analytics/shop.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:general": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src node_modules/@fidecly/grpc-proto/proto/analytics/general.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
     "proto:analytics": "protoc --plugin=node_modules/.bin/protoc-gen-ts_proto -I=./node_modules/@fidecly/grpc-proto/proto/analytics --ts_proto_out=src node_modules/@fidecly/grpc-proto/proto/analytics/analytics.proto --ts_proto_opt=nestJs=true --ts_proto_opt=fileSuffix=.pb --experimental_allow_proto3_optional",
-    "proto:all": "npm run proto:balance && npm run proto:card && npm run proto:promotion && npm run proto:shop && npm run proto:general && npm run proto:analytics"
+    "proto:all": "npm run proto:analytics"
   },
   "dependencies": {
     "@fidecly/grpc-proto": "github:FideCly/grpc-proto",

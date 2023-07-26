@@ -54,11 +54,16 @@ export class AppService {
         } as GetAffluenceResponse;
       }
 
-      if (!shop.promotions || shop.promotions.length === 0) {
+      if (
+        !shop.promotions ||
+        shop.promotions.length === 0 ||
+        !shop.cards ||
+        shop.cards.length === 0
+      ) {
         return {
-          status: 404,
-          value: null,
-          errors: ["Promotions not found"],
+          status: 200,
+          value: 0,
+          errors: [],
         } as GetAffluenceResponse;
       }
 
@@ -129,9 +134,9 @@ export class AppService {
 
       if (!promotion) {
         return {
-          status: 404,
-          value: null,
-          errors: ["Promotion not found"],
+          status: 200,
+          value: 0,
+          errors: [],
         } as GetPromotionCheckoutsCountResponse;
       }
 
