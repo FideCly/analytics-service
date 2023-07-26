@@ -139,7 +139,7 @@ describe("AppService", () => {
       });
     });
 
-    it("should return an error response if the promotion is not found", async () => {
+    it("should return an error response if the promotion is not found...", async () => {
       jest
         .spyOn(mockPromotionRepository, "findOne")
         .mockResolvedValue(undefined);
