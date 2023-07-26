@@ -1,18 +1,16 @@
 import { Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
-import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
+import { BALANCE_SERVICE_NAME } from "../analytics.pb";
 import { CreateOrUpdateBalanceDto } from "./balance.dto";
 import { BalanceService } from "./balance.service";
 
-@Controller("balance")
+@Controller()
 export class BalanceController {
   constructor(private service: BalanceService) {}
 
-  @GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
+  @GrpcMethod(BALANCE_SERVICE_NAME, "Send")
   async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
-    const balance = await this.service.findOne(
-      +createOrUpdateBalanceDto.promotionId
-    );
+    const balance = await this.service.findOne(+createOrUpdateBalanceDto.id);
 
     if (balance) {
       return this.service.update(

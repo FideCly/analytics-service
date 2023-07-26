@@ -1,16 +1,17 @@
 import { Body, Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
-import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
+import { SHOP_SERVICE_NAME } from "../analytics.pb";
 import { CreateOrUpdateShopDto } from "./shop.dto";
 import { ShopService } from "./shop.service";
 
-@Controller("shop")
+@Controller()
 export class ShopController {
   constructor(private service: ShopService) {}
 
-  @GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
-  async createOrUpdate(@Body() createOrUpdateShopDto: CreateOrUpdateShopDto) {
+  @GrpcMethod(SHOP_SERVICE_NAME, "Send")
+  async send(@Body() createOrUpdateShopDto: CreateOrUpdateShopDto) {
     const promotion = await this.service.findOne(+createOrUpdateShopDto.id);
+
     if (promotion) {
       return this.service.update(
         +createOrUpdateShopDto.id,

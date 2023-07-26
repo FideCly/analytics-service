@@ -14,15 +14,17 @@ export class PromotionService {
   }
 
   findOneFromShop(id: number, shopId: number): Promise<Promotion | null> {
-    return this.repository.findOneBy({ id, shopId });
+    return this.repository.findOne({
+      where: { id, shopId },
+      relations: { balances: true },
+    });
   }
 
-  async create(createPromotionDto: CreateOrUpdatePromotionDto, shopId: number) {
+  async create(createPromotionDto: CreateOrUpdatePromotionDto) {
     try {
       const promotion = {
         ...new Promotion(),
         ...createPromotionDto,
-        shopId: shopId,
       };
       await this.repository.save(promotion);
       return { status: 200, errors: null };

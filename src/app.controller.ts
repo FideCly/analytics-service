@@ -9,7 +9,7 @@ import {
 import { ANALYTICS_SERVICE_NAME, GetAffluenceResponse } from "./analytics.pb";
 import { AppService } from "./app.service";
 
-@Controller("analytics")
+@Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 

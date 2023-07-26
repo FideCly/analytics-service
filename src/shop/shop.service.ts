@@ -7,7 +7,7 @@ import { Shop } from "./shop.entity";
 @Injectable()
 export class ShopService {
   @InjectRepository(Shop)
-  private readonly repository: Repository<Shop>;
+  private repository: Repository<Shop>;
 
   /**
    * Find shop by id
@@ -15,8 +15,9 @@ export class ShopService {
    * @returns A shop if found
    */
   findOne = (id: number): Promise<Shop | null> => {
-    return this.repository.findOneBy({
-      id,
+    return this.repository.findOne({
+      where: { id },
+      relations: { promotions: { balances: true }, cards: { balances: true } },
     });
   };
 

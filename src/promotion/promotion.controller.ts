@@ -1,14 +1,14 @@
 import { Body, Controller } from "@nestjs/common";
 import { GrpcMethod } from "@nestjs/microservices";
-import { ANALYTICS_PACKAGE_NAME } from "../analytics.pb";
+import { PROMOTION_SERVICE_NAME } from "src/analytics.pb";
 import { CreateOrUpdatePromotionDto } from "./promotion.dto";
 import { PromotionService } from "./promotion.service";
 
-@Controller("promotion")
+@Controller()
 export class PromotionController {
   constructor(private service: PromotionService) {}
 
-  @GrpcMethod(ANALYTICS_PACKAGE_NAME, "Send")
+  @GrpcMethod(PROMOTION_SERVICE_NAME, "Send")
   async createOrUpdate(
     @Body() createOrUpdatePromotionDto: CreateOrUpdatePromotionDto
   ) {
@@ -22,9 +22,6 @@ export class PromotionController {
       );
     }
 
-    return this.service.create(
-      createOrUpdatePromotionDto,
-      +createOrUpdatePromotionDto.id
-    );
+    return this.service.create(createOrUpdatePromotionDto);
   }
 }

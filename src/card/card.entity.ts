@@ -19,19 +19,6 @@ export class Card extends BaseEntity {
   id: number;
 
   @Column({
-    type: "timestamp",
-    precision: 3,
-    default: new Date(),
-  })
-  startAt: Date;
-
-  @Column({
-    type: "timestamp",
-    precision: 3,
-  })
-  endAt: Date;
-
-  @Column({
     default: true,
   })
   isActive: boolean;
