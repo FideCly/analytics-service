@@ -11,7 +11,7 @@ export class BalanceController {
   @GrpcMethod(BALANCE_SERVICE_NAME, "Send")
   async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
     const balance = await this.service.findOne(+createOrUpdateBalanceDto.id);
-
+    console.log(createOrUpdateBalanceDto);
     if (balance) {
       return this.service.update(
         +createOrUpdateBalanceDto.promotionId,
