@@ -29,10 +29,27 @@ export class BalanceService {
 
   async update(id: number, updateBalanceDto: CreateOrUpdateBalanceDto) {
     try {
-      await this.repository.update(id, {
-        counter: updateBalanceDto.counter,
-        isActive: updateBalanceDto.isActive,
+      await this.repository.manager.transaction(async (manager) => {
+        const balance = await manager.findOne(Balance, { where: { id } });
+        if (!balance) {
+          return null;
+        }
+
+        // Update user properties
+        Object.assign(balance, updateBalanceDto);
+
+        await manager.save(Balance, balance);
+        return balance;
       });
+      // const balance = await this.findOne(id);
+      // balance.counter = updateBalanceDto.counter;
+      // balance.isActive = updateBalanceDto.isActive;
+      // await this.repository.save(balance);
+
+      // await this.repository.update(id, {
+      //   counter: updateBalanceDto.counter,
+      //   isActive: updateBalanceDto.isActive,
+      // });
 
       return { status: 200, errors: null };
     } catch (error) {
