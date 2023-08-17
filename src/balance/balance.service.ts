@@ -29,7 +29,10 @@ export class BalanceService {
 
   async update(id: number, updateBalanceDto: CreateOrUpdateBalanceDto) {
     try {
-      await this.repository.update(id, updateBalanceDto);
+      await this.repository.update(id, {
+        counter: updateBalanceDto.counter,
+        isActive: updateBalanceDto.isActive,
+      });
 
       return { status: 200, errors: null };
     } catch (error) {
