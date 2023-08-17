@@ -147,6 +147,8 @@ export class AppService {
         );
       });
 
+      console.log(filteredBalances)
+
       // sum counter in balances (number)
       const count: number = filteredBalances.reduce((acc, balance) => {
         return acc + balance.counter;
