@@ -13,10 +13,17 @@ export class CardService {
     return this.repository.findOneBy({ id });
   }
 
-  async create(CreateOrCreateOrUpdateCardDto: CreateOrUpdateCardDto) {
-    const card = { ...new Card(), ...CreateOrCreateOrUpdateCardDto };
+  async create(createCardDto: CreateOrUpdateCardDto) {
     try {
-      await this.repository.save(card);
+      await this.repository.manager.transaction(async (manager) => {
+        const card = this.repository.create({
+          ...new Card(),
+          ...createCardDto,
+        });
+
+        await manager.save(Card, card);
+        return card;
+      });
 
       return { status: 200, errors: null };
     } catch (error) {
@@ -24,9 +31,20 @@ export class CardService {
     }
   }
 
-  async update(id: number, CreateOrUpdateCardDto: CreateOrUpdateCardDto) {
+  async update(id: number, updateCardDto: CreateOrUpdateCardDto) {
     try {
-      await this.repository.update(id, CreateOrUpdateCardDto);
+      await this.repository.manager.transaction(async (manager) => {
+        const card = await manager.findOne(Card, { where: { id } });
+        if (!card) {
+          return null;
+        }
+
+        // Update card properties
+        Object.assign(card, updateCardDto);
+
+        await manager.save(Card, Card);
+        return card;
+      });
 
       return { status: 200, errors: null };
     } catch (error) {

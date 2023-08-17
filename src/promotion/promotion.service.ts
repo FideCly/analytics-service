@@ -22,11 +22,16 @@ export class PromotionService {
 
   async create(createPromotionDto: CreateOrUpdatePromotionDto) {
     try {
-      const promotion = {
-        ...new Promotion(),
-        ...createPromotionDto,
-      };
-      await this.repository.save(promotion);
+      await this.repository.manager.transaction(async (manager) => {
+        const promotion = this.repository.create({
+          ...new Promotion(),
+          ...createPromotionDto,
+        });
+
+        await manager.save(Promotion, promotion);
+        return promotion;
+      });
+
       return { status: 200, errors: null };
     } catch (error) {
       return { status: 500, errors: [error] };
@@ -35,7 +40,19 @@ export class PromotionService {
 
   async update(id: number, updatePromotionDto: CreateOrUpdatePromotionDto) {
     try {
-      await this.repository.update(id, updatePromotionDto);
+      await this.repository.manager.transaction(async (manager) => {
+        const promotion = await manager.findOne(Promotion, { where: { id } });
+        if (!promotion) {
+          return null;
+        }
+
+        // Update promotion properties
+        Object.assign(promotion, updatePromotionDto);
+
+        await manager.save(Promotion, promotion);
+        return promotion;
+      });
+
       return { status: 200, errors: null };
     } catch (error) {
       return { status: 500, errors: [error] };

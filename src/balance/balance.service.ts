@@ -17,9 +17,16 @@ export class BalanceService {
   }
 
   async create(createBalanceDto: CreateOrUpdateBalanceDto) {
-    const balance = { ...new Balance(), ...createBalanceDto };
     try {
-      await this.repository.save(balance);
+      await this.repository.manager.transaction(async (manager) => {
+        const balance = this.repository.create({
+          ...new Balance(),
+          ...createBalanceDto,
+        });
+
+        await manager.save(Balance, balance);
+        return balance;
+      });
 
       return { status: 200, errors: null };
     } catch (error) {
@@ -35,21 +42,12 @@ export class BalanceService {
           return null;
         }
 
-        // Update user properties
+        // Update balance properties
         Object.assign(balance, updateBalanceDto);
 
         await manager.save(Balance, balance);
         return balance;
       });
-      // const balance = await this.findOne(id);
-      // balance.counter = updateBalanceDto.counter;
-      // balance.isActive = updateBalanceDto.isActive;
-      // await this.repository.save(balance);
-
-      // await this.repository.update(id, {
-      //   counter: updateBalanceDto.counter,
-      //   isActive: updateBalanceDto.isActive,
-      // });
 
       return { status: 200, errors: null };
     } catch (error) {

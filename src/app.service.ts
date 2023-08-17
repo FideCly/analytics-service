@@ -67,12 +67,8 @@ export class AppService {
         } as GetAffluenceResponse;
       }
 
-      const promotions = shop.promotions.filter(
-        (promotion) => promotion.isActive
-      );
-
       let balances: Balance[] = [];
-      for (const promotion of promotions) {
+      for (const promotion of shop.promotions) {
         const promotionBalances = promotion.balances;
         balances = [...balances, ...promotionBalances];
       }
