@@ -17,7 +17,10 @@ export class ShopService {
   findOne = (id: number): Promise<Shop | null> => {
     return this.repository.findOne({
       where: { id },
-      relations: { promotions: { balances: true }, cards: { balances: true } },
+      relations: {
+        promotions: { balances: { transactions: true } },
+        cards: { balances: { transactions: true } },
+      },
     });
   };
 
@@ -41,7 +44,7 @@ export class ShopService {
   findOneClients = (id: number): Promise<Shop | null> => {
     return this.repository.findOne({
       where: { id },
-      relations: { cards: { balances: true } },
+      relations: { cards: { balances: { transactions: true } } },
     });
   };
 

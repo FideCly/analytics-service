@@ -12,7 +12,7 @@ export class BalanceService {
   findOne(id: number): Promise<Balance | null> {
     return this.repository.findOne({
       where: { id },
-      relations: { card: { shop: true } },
+      relations: { card: { shop: true }, transactions: true },
     });
   }
 
