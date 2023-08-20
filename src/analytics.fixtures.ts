@@ -1,3 +1,5 @@
+import { Shop } from "./shop/shop.entity";
+
 export const shopFixture = {
   id: 1,
   name: "Mock Shop",
@@ -5,8 +7,8 @@ export const shopFixture = {
     {
       id: 1,
       name: "Mock Promotion 1",
-      startDate: new Date("2023-03-22"),
-      endDate: new Date("2023-03-25"),
+      startAt: new Date("2023-03-22"),
+      endAt: new Date("2023-03-25"),
       isActive: true,
       balances: [
         {
@@ -15,11 +17,17 @@ export const shopFixture = {
           createdAt: new Date("2023-03-22"),
           promotion: {
             id: 1,
+            shopId: 1,
             name: "Mock Promotion 1",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date(new Date("2023-03-25")),
+            checkoutLimit: 2,
+            startAt: new Date("2023-03-22"),
+            endAt: new Date(new Date("2023-03-25")),
             createdAt: new Date("2023-03-22"),
+            isActive: true,
           },
+          transactions: [
+            { id: 1, balanceId: 1, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
           id: 2,
@@ -27,11 +35,15 @@ export const shopFixture = {
           createdAt: new Date("2023-03-23"),
           promotion: {
             id: 1,
-            name: "Mock Promotion 1",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date("2023-03-25"),
+            name: "Mock Promotion 2",
+            startAt: new Date("2023-03-22"),
+            endAt: new Date("2023-03-25"),
             createdAt: new Date("2023-03-22"),
           },
+          transactions: [
+            { id: 1, balanceId: 2, createdAt: new Date("2023-03-22") },
+            { id: 2, balanceId: 2, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
           id: 3,
@@ -40,10 +52,15 @@ export const shopFixture = {
           promotion: {
             id: 1,
             name: "Mock Promotion 1",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date("2023-03-25"),
+            startAt: new Date("2023-03-22"),
+            endAt: new Date("2023-03-25"),
             createdAt: new Date("2023-03-23"),
           },
+          transactions: [
+            { id: 1, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 2, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 3, balanceId: 3, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
           id: 4,
@@ -51,19 +68,25 @@ export const shopFixture = {
           createdAt: new Date("2023-04-21"),
           promotion: {
             id: 1,
-            name: "Mock Promotion 1",
-            startDate: new Date("2023-04-25"),
-            endDate: new Date("2023-05-27"),
+            name: "Mock Promotion 4",
+            startAt: new Date("2023-04-25"),
+            endAt: new Date("2023-05-27"),
             createdAt: new Date("2023-04-21"),
           },
+          transactions: [
+            { id: 1, balanceId: 4, createdAt: new Date("2023-04-25") },
+            { id: 2, balanceId: 4, createdAt: new Date("2023-04-26") },
+            { id: 3, balanceId: 4, createdAt: new Date("2023-04-28") },
+            { id: 4, balanceId: 4, createdAt: new Date("2023-04-25") },
+          ],
         },
       ],
     },
     {
       id: 2,
       name: "Mock Promotion 2",
-      startDate: new Date("2023-03-22"),
-      endDate: new Date("2023-03-25"),
+      startAt: new Date("2023-03-22"),
+      endAt: new Date("2023-03-25"),
       isActive: true,
       balances: [
         {
@@ -73,46 +96,67 @@ export const shopFixture = {
           promotion: {
             id: 2,
             name: "Mock Promotion 2",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date(new Date("2023-03-25")),
+            startAt: new Date("2023-03-22"),
+            endAt: new Date(new Date("2023-03-25")),
             createdAt: new Date("2023-03-22"),
           },
+          transactions: [
+            { id: 1, balanceId: 1, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
-          id: 1,
+          id: 2,
           counter: 2,
           createdAt: new Date("2023-03-23"),
           promotion: {
             id: 2,
             name: "Mock Promotion 2",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date("2023-03-25"),
+            startAt: new Date("2023-03-22"),
+            endAt: new Date("2023-03-25"),
             createdAt: new Date("2023-03-22"),
           },
+          transactions: [
+            { id: 1, balanceId: 2, createdAt: new Date("2023-03-22") },
+            { id: 2, balanceId: 2, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
-          id: 1,
+          id: 3,
           counter: 6,
           createdAt: new Date("2023-03-24"),
           promotion: {
             id: 2,
             name: "Mock Promotion 2",
-            startDate: new Date("2023-03-22"),
-            endDate: new Date("2023-03-25"),
+            startAt: new Date("2023-03-22"),
+            endAt: new Date("2023-03-25"),
             createdAt: new Date("2023-03-23"),
           },
+          transactions: [
+            { id: 1, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 2, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 3, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 4, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 5, balanceId: 3, createdAt: new Date("2023-03-22") },
+            { id: 6, balanceId: 3, createdAt: new Date("2023-03-22") },
+          ],
         },
         {
-          id: 1,
+          id: 4,
           counter: 4,
           createdAt: new Date("2023-04-21"),
           promotion: {
             id: 2,
             name: "Mock Promotion 2",
-            startDate: new Date("2023-04-25"),
-            endDate: new Date("2023-05-27"),
+            startAt: new Date("2023-04-25"),
+            endAt: new Date("2023-05-27"),
             createdAt: new Date("2023-04-21"),
           },
+          transactions: [
+            { id: 1, balanceId: 4, createdAt: new Date("2023-04-25") },
+            { id: 2, balanceId: 4, createdAt: new Date("2023-04-25") },
+            { id: 3, balanceId: 4, createdAt: new Date("2023-04-25") },
+            { id: 4, balanceId: 4, createdAt: new Date("2023-04-25") },
+          ],
         },
       ],
     },
@@ -191,8 +235,8 @@ export const promotionFixture = {
   id: 1,
   createdAt: new Date("2023-01-01"),
   name: "Mock Promotion 1",
-  startDate: new Date("2023-03-22"),
-  endDate: new Date("2023-03-25"),
+  startAt: new Date("2023-03-22"),
+  endAt: new Date("2023-03-25"),
   isActive: true,
   balances: [
     {
@@ -202,8 +246,8 @@ export const promotionFixture = {
       promotion: {
         id: 1,
         name: "Mock Promotion 1",
-        startDate: new Date("2023-03-22"),
-        endDate: new Date("2023-03-25"),
+        startAt: new Date("2023-03-22"),
+        endAt: new Date("2023-03-25"),
         createdAt: new Date("2023-03-22"),
       },
     },
@@ -215,8 +259,8 @@ export const promotionFixture = {
       promotion: {
         id: 1,
         name: "Mock Promotion 1",
-        startDate: new Date("2023-03-22"),
-        endDate: new Date("2023-03-25"),
+        startAt: new Date("2023-03-22"),
+        endAt: new Date("2023-03-25"),
         createdAt: new Date("2023-03-22"),
       },
     },
@@ -227,8 +271,8 @@ export const promotionFixture = {
       promotion: {
         id: 1,
         name: "Mock Promotion 1",
-        startDate: new Date("2023-03-22"),
-        endDate: new Date("2023-03-25"),
+        startAt: new Date("2023-03-22"),
+        endAt: new Date("2023-03-25"),
         createdAt: new Date("2023-03-22"),
       },
     },
@@ -239,8 +283,8 @@ export const promotionFixture = {
       promotion: {
         id: 1,
         name: "Mock Promotion 1",
-        startDate: new Date("2023-03-22"),
-        endDate: new Date("2023-03-25"),
+        startAt: new Date("2023-03-22"),
+        endAt: new Date("2023-03-25"),
         createdAt: new Date("2023-03-22"),
       },
     },

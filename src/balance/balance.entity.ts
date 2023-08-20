@@ -6,11 +6,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Card } from "../card/card.entity";
 import { Promotion } from "../promotion/promotion.entity";
+import { Transaction } from "../transaction/transaction.entity";
 
 @Entity()
 export class Balance {
@@ -36,6 +38,12 @@ export class Balance {
   @ManyToOne(() => Card, (card: Card) => card.balances)
   @JoinColumn()
   card!: Card;
+
+  @OneToMany(
+    () => Transaction,
+    (transaction: Transaction) => transaction.balance
+  )
+  transactions!: Array<Transaction>;
 
   @CreateDateColumn()
   createdAt!: Date;

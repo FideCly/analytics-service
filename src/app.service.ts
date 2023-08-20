@@ -14,6 +14,7 @@ import {
 import { Balance } from "./balance/balance.entity";
 import { PromotionService } from "./promotion/promotion.service";
 import { ShopService } from "./shop/shop.service";
+import { Transaction } from "./transaction/transaction.entity";
 
 @Injectable()
 export class AppService {
@@ -67,30 +68,26 @@ export class AppService {
         } as GetAffluenceResponse;
       }
 
-      let balances: Balance[] = [];
-      for (const promotion of shop.promotions) {
-        const promotionBalances = promotion.balances;
-        balances = [...balances, ...promotionBalances];
-      }
+      let transactions: Transaction[] = [];
+      for (const promotion of shop.promotions)
+        for (const balance of promotion.balances)
+          transactions = [...transactions, ...balance.transactions];
 
-      // filter balances by period
-      let filteredBalances: Balance[] = [];
-      filteredBalances = balances.filter((balance) => {
-        return (
-          balance.createdAt.toISOString()?.split("T")?.[0] >=
-            payload.startDate &&
-          balance.createdAt.toISOString()?.split("T")?.[0] <= payload.endDate
-        );
-      });
-
-      // sum counter in balances
-      const count = filteredBalances.reduce((acc, balance) => {
-        return acc + balance.counter;
-      }, 0);
+      // filter transactions by period
+      let filteredTransactions: Transaction[] = transactions.filter(
+        (transaction) => {
+          return (
+            transaction.createdAt.toISOString()?.split("T")?.[0] >=
+              payload.startDate &&
+            transaction.createdAt.toISOString()?.split("T")?.[0] <=
+              payload.endDate
+          );
+        }
+      );
 
       return {
         status: 200,
-        value: count,
+        value: filteredTransactions.length,
         errors: [],
       } as GetAffluenceResponse;
     } catch (error) {
