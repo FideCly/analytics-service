@@ -15,18 +15,21 @@ export class BalanceController {
   @GrpcMethod(BALANCE_SERVICE_NAME, "Send")
   async createOrUpdate(createOrUpdateBalanceDto: CreateOrUpdateBalanceDto) {
     const balance = await this.service.findOne(+createOrUpdateBalanceDto.id);
-
-    await this.transactionService.create({
-      balanceId: createOrUpdateBalanceDto.id,
-    });
+    let result;
 
     if (balance) {
-      return this.service.update(
+      result = await this.service.update(
         +createOrUpdateBalanceDto.promotionId,
         createOrUpdateBalanceDto
       );
     } else {
-      return this.service.create(createOrUpdateBalanceDto);
+      result = await this.service.create(createOrUpdateBalanceDto);
     }
+
+    if (result.status != 200) return result;
+
+    return this.transactionService.create({
+      balanceId: createOrUpdateBalanceDto.id,
+    });
   }
 }
